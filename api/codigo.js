@@ -1,6 +1,5 @@
-// api/codigo.js — Vercel Serverless Function
-// El cliente solo manda su correo @sharebot.net
-// Las contraseñas están guardadas aquí (solo tú las ves)
+// api/codigo.js — Vercel Serverless Function v2.1
+// El cliente solo manda su correo — las contraseñas solo las ves tú
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,122 +20,146 @@ export default async function handler(req, res) {
 
   const correoNorm = correo.toLowerCase().trim();
 
-  if (!correoNorm.endsWith('@sharebot.net')) {
-    return res.status(400).json({ error: 'Solo se aceptan correos @sharebot.net.' });
+  if (!correoNorm.includes('@')) {
+    return res.status(400).json({ error: 'Correo inválido.' });
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // AQUÍ GUARDAS TUS CORREOS Y CONTRASEÑAS
-  // El cliente NUNCA ve esto — solo está en tu servidor Vercel
-  //
-  // Formato:
-  //   'correo@sharebot.net': { pass: 'contraseña', servicio: 'netflix_hogar' | 'netflix_login' | 'disney' }
-  //
-  // IMPORTANTE: El campo "servicio" indica para qué plataforma
-  // es ese correo. Si un correo sirve para dos cosas (hogar y login)
-  // ponlo dos veces con distinto servicio o usa 'netflix' para ambos.
-  // ══════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════
+  // TUS CORREOS Y CONTRASEÑAS — el cliente NUNCA ve esto
+  // Pon aquí todos tus correos con sus contraseñas reales
+  // ═══════════════════════════════════════════════════════════
   const CUENTAS = {
-    // ── NETFLIX ──────────────────────────────────────────────
-    'sadsad@sharebot.net': { pass: 'CUENTAS', servicio: 'netflix' },
-    'disneyaccount23@sharebot.net': { pass: 'dasd', servicio: 'netflix' },
-    '41414143@sharebot.net': { pass: 'CONTRASEÑA_3', servicio: 'netflix' },
-    '41414144@sharebot.net': { pass: 'CONTRASEÑA_4', servicio: 'netflix' },
-    '41414145@sharebot.net': { pass: 'CONTRASEÑA_5', servicio: 'netflix' },
+    // ── NETFLIX ─────────────────────────────────────────────
+    'sadsad@sharebot.net':          { pass: 'CUENTAS', servicio: 'netflix' },
+    'disneyaccount23@sharebot.net': { pass: 'dasd',    servicio: 'netflix' },
+    // Agrega más correos así:
+    // 'micorreo@sharebot.net': { pass: 'miContraseña', servicio: 'netflix' },
 
-    // ── DISNEY+ ───────────────────────────────────────────────
-    '41414150@sharebot.net': { pass: 'CONTRASEÑA_6',  servicio: 'disney' },
-    '41414151@sharebot.net': { pass: 'CONTRASEÑA_7',  servicio: 'disney' },
-    '41414152@sharebot.net': { pass: 'CONTRASEÑA_8',  servicio: 'disney' },
-    '41414153@sharebot.net': { pass: 'CONTRASEÑA_9',  servicio: 'disney' },
-    '41414154@sharebot.net': { pass: 'CONTRASEÑA_10', servicio: 'disney' },
-
-    // Agrega todos los que necesites con el mismo formato...
+    // ── DISNEY+ ─────────────────────────────────────────────
+    // 'correoDisney@sharebot.net': { pass: 'contraseña', servicio: 'disney' },
   };
 
-  // Buscar el correo en la lista
   const cuenta = CUENTAS[correoNorm];
   if (!cuenta) {
-    return res.status(403).json({ error: 'Correo no registrado. Verifica que sea el correo correcto.' });
+    return res.status(403).json({
+      error: 'Correo no registrado. Verifica que sea exactamente el correo que te proporcionamos.'
+    });
   }
 
-  // Verificar que el correo es del servicio correcto
-  // 'netflix' acepta tanto netflix_hogar como netflix_login
+  // Verificar que el correo corresponde al servicio seleccionado
   const servicioOk =
     cuenta.servicio === servicio ||
     (cuenta.servicio === 'netflix' && (servicio === 'netflix_hogar' || servicio === 'netflix_login'));
 
   if (!servicioOk) {
     return res.status(403).json({
-      error: `Este correo no corresponde al servicio seleccionado. Verifica el servicio.`
+      error: 'Este correo no corresponde al servicio seleccionado.'
     });
   }
 
-  const MAILTM_API = 'https://api.mail.tm';
+  const MAILTM = 'https://api.mail.tm';
 
   try {
-    // ── PASO 1: Autenticarse en mail.tm con las credenciales internas ──
-    const loginRes = await fetch(`${MAILTM_API}/token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: correoNorm, password: cuenta.pass })
-    });
+    // ── PASO 1: Login en mail.tm ─────────────────────────────
+    console.log(`[LOGIN] Intentando para: ${correoNorm}`);
+
+    let loginRes;
+    try {
+      loginRes = await fetch(`${MAILTM}/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: correoNorm, password: cuenta.pass })
+      });
+    } catch (err) {
+      console.error('[ERROR FETCH LOGIN]', err.message);
+      return res.status(502).json({
+        error: `Sin conexión con mail.tm: ${err.message}. Intenta de nuevo.`
+      });
+    }
+
+    const rawText = await loginRes.text();
+    let loginBody = {};
+    try { loginBody = JSON.parse(rawText); } catch { loginBody = { raw: rawText }; }
+
+    console.log(`[LOGIN STATUS] ${loginRes.status} — ${rawText.substring(0, 200)}`);
 
     if (!loginRes.ok) {
       if (loginRes.status === 401) {
-        return res.status(500).json({ error: 'Error de configuración interna. Contacta al soporte.' });
+        return res.status(500).json({
+          error: 'Error de configuración. Contacta al soporte (código: auth-fail).'
+        });
       }
-      return res.status(500).json({ error: 'No se pudo conectar con el servidor de correo. Intenta de nuevo.' });
+      if (loginRes.status === 404) {
+        return res.status(500).json({
+          error: 'La cuenta de correo no existe en mail.tm. Contacta al soporte (código: no-account).'
+        });
+      }
+      if (loginRes.status === 429) {
+        return res.status(429).json({
+          error: 'Demasiados intentos. Espera 1 minuto y vuelve a intentar.'
+        });
+      }
+      return res.status(500).json({
+        error: `Error del servidor de correo (${loginRes.status}). Intenta de nuevo en unos segundos.`
+      });
     }
 
-    const { token } = await loginRes.json();
+    const { token } = loginBody;
+    if (!token) {
+      return res.status(500).json({ error: 'No se obtuvo token. Intenta de nuevo.' });
+    }
 
-    // ── PASO 2: Leer los mensajes más recientes ──
-    const msgsRes = await fetch(`${MAILTM_API}/messages?page=1`, {
+    // ── PASO 2: Obtener mensajes ─────────────────────────────
+    const msgsRes = await fetch(`${MAILTM}/messages?page=1`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
     if (!msgsRes.ok) {
-      return res.status(500).json({ error: 'Error al leer la bandeja. Intenta de nuevo.' });
+      return res.status(500).json({
+        error: `Error al leer bandeja (${msgsRes.status}). Intenta de nuevo.`
+      });
     }
 
     const msgsData = await msgsRes.json();
     const messages = msgsData['hydra:member'] || [];
 
+    console.log(`[MENSAJES] Encontrados: ${messages.length}`);
+
     if (messages.length === 0) {
       return res.status(404).json({
-        error: 'La bandeja está vacía. Solicita el código en la app primero y vuelve a intentar.'
+        error: 'La bandeja está vacía. Solicita el código en la app de Netflix o Disney+ primero.'
       });
     }
 
-    // ── PASO 3: Tomar el mensaje más reciente (primero de la lista) ──
-    // mail.tm devuelve los mensajes ordenados del más reciente al más antiguo
+    // El más reciente primero
     const sorted = [...messages].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
-    const msgReciente = sorted[0];
+    const ultimo = sorted[0];
+    console.log(`[ULTIMO MSG] Asunto: "${ultimo.subject}" | De: ${ultimo.from?.address}`);
 
-    // ── PASO 4: Leer el contenido completo ──
-    const msgRes = await fetch(`${MAILTM_API}/messages/${msgReciente.id}`, {
+    // ── PASO 3: Leer el mensaje completo ────────────────────
+    const msgRes = await fetch(`${MAILTM}/messages/${ultimo.id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
     if (!msgRes.ok) {
-      return res.status(500).json({ error: 'Error al leer el mensaje. Intenta de nuevo.' });
+      return res.status(500).json({ error: `Error al leer mensaje (${msgRes.status}).` });
     }
 
     const msg = await msgRes.json();
 
-    // Combinar texto plano y HTML para buscar el código
     const textoPlano = msg.text || '';
     const textoHtml  = Array.isArray(msg.html) ? msg.html.join(' ') : (msg.html || '');
     const textoTotal = textoPlano + ' ' + textoHtml;
 
-    // ── PASO 5: Extraer el código o link según el servicio ──
+    console.log(`[TEXTO PLANO] ${textoPlano.substring(0, 400)}`);
+
+    // ── PASO 4: Extraer código o link ────────────────────────
     let valor = null;
 
     if (servicio === 'netflix_hogar') {
-      // Netflix Hogar: buscar el link de actualización de ubicación
+      // Buscar link de actualización de hogar Netflix
       const patrones = [
         /https:\/\/www\.netflix\.com\/account\/travel\/[^\s"'<>\)\\]+/gi,
         /https:\/\/www\.netflix\.com\/[^\s"'<>\)\\]*travel[^\s"'<>\)\\]+/gi,
@@ -145,22 +168,19 @@ export default async function handler(req, res) {
       ];
       for (const p of patrones) {
         const m = textoTotal.match(p);
-        if (m && m[0]) {
-          valor = m[0].replace(/['">\s\\]+$/, '').trim();
-          break;
-        }
+        if (m?.[0]) { valor = m[0].replace(/['">\s\\]+$/, '').trim(); break; }
       }
 
     } else if (servicio === 'netflix_login') {
-      // Netflix Login: código de 4 o 6 dígitos
+      // Código 4 o 6 dígitos de Netflix
       const patrones = [
         /c[oó]digo[^0-9]*([0-9]{4,6})/i,
         /code[^0-9]*([0-9]{4,6})/i,
         /verificaci[oó]n[^0-9]*([0-9]{4,6})/i,
         /verification[^0-9]*([0-9]{4,6})/i,
-        />\s*([0-9]{4,6})\s*</,          // número entre tags HTML
-        /\b([0-9]{6})\b/,                // 6 dígitos solos
-        /\b([0-9]{4})\b/,                // 4 dígitos solos
+        />\s*([0-9]{4,6})\s*</,
+        /\b([0-9]{6})\b/,
+        /\b([0-9]{4})\b/,
       ];
       for (const p of patrones) {
         const m = textoTotal.match(p);
@@ -168,7 +188,7 @@ export default async function handler(req, res) {
       }
 
     } else if (servicio === 'disney') {
-      // Disney+: código de 6 dígitos
+      // Código 6 dígitos de Disney+
       const patrones = [
         /c[oó]digo[^0-9]*([0-9]{6})/i,
         /code[^0-9]*([0-9]{6})/i,
@@ -184,13 +204,16 @@ export default async function handler(req, res) {
     }
 
     if (!valor) {
+      console.log('[NO CODIGO] Texto completo:', textoPlano.substring(0, 600));
       return res.status(404).json({
-        error: `No se encontró el código en el último email (asunto: "${msgReciente.subject || 'sin asunto'}"). Solicita el código en la app y vuelve a intentar en unos segundos.`
+        error: `No se encontró el código en el último email ("${ultimo.subject || 'sin asunto'}"). Solicita el código nuevamente en la app.`
       });
     }
 
-    // ── PASO 6: Marcar como leído en segundo plano ──
-    fetch(`${MAILTM_API}/messages/${msgReciente.id}`, {
+    console.log(`[OK] Valor extraído: ${valor.substring(0, 80)}`);
+
+    // Marcar como leído (no bloqueante)
+    fetch(`${MAILTM}/messages/${ultimo.id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -202,12 +225,12 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       valor,
-      asunto: msgReciente.subject || '',
-      fecha:  msgReciente.createdAt || ''
+      asunto: ultimo.subject || '',
+      fecha:  ultimo.createdAt || ''
     });
 
   } catch (err) {
-    console.error('[ERROR api/codigo]', err);
-    return res.status(500).json({ error: 'Error interno. Intenta de nuevo en unos segundos.' });
+    console.error('[ERROR GENERAL]', err);
+    return res.status(500).json({ error: `Error: ${err.message}` });
   }
 }
