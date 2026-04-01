@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   const CUENTAS = {
     // ── NETFLIX ──────────────────────────────────────────────
     'sadsad@sharebot.net': { pass: 'CUENTAS', servicio: 'netflix' },
-    '41414142@sharebot.net': { pass: 'CONTRASEÑA_2', servicio: 'netflix' },
+    'disneyaccount23@sharebot.net': { pass: 'dasd', servicio: 'netflix' },
     '41414143@sharebot.net': { pass: 'CONTRASEÑA_3', servicio: 'netflix' },
     '41414144@sharebot.net': { pass: 'CONTRASEÑA_4', servicio: 'netflix' },
     '41414145@sharebot.net': { pass: 'CONTRASEÑA_5', servicio: 'netflix' },
