@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   // ═══════════════════════════════════════════════════════════
   const CUENTAS = {
     // ── NETFLIX ─────────────────────────────────────────────
-    'sadsad@sharebot.net':          { pass: 'CUENTAS', servicio: 'netflix' },
+    'disneyaccount23@sharebot.net':          { pass: 'dasd', servicio: 'netflix' },
     'disneyaccount23@sharebot.net': { pass: 'dasd',    servicio: 'netflix' },
     // Agrega más correos así:
     // 'micorreo@sharebot.net': { pass: 'miContraseña', servicio: 'netflix' },
