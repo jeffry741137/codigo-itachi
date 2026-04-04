@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
   const CUENTAS = {
     // ── NETFLIX ─────────────────────────────────────────────
     'disneyaccount23@sharebot.net':          { pass: 'dasd', servicio: 'netflix' },
-    'disneyaccount23@sharebot.net': { pass: 'dasd',    servicio: 'netflix' },
+    'maino123das@sharebot.net': { pass: 'sad123',    servicio: 'netflix' },
     // Agrega más correos así:
     // 'micorreo@sharebot.net': { pass: 'miContraseña', servicio: 'netflix' },
 
