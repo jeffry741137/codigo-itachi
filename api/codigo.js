@@ -233,4 +233,4 @@ module.exports = async (req, res) => {
     console.error('[ERROR GENERAL]', err);
     return res.status(500).json({ error: `Error: ${err.message}` });
   }
-}
+};
