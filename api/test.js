@@ -1,45 +1,34 @@
-// api/test.js — ENDPOINT DE DIAGNÓSTICO TEMPORAL
-// Úsalo para ver qué pasa exactamente con mail.tm
-// ELIMÍNALO después de solucionar el problema
-
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   const { correo, pass } = req.query;
-
   if (!correo || !pass) {
-    return res.status(400).json({ 
-      error: 'Usa: /api/test?correo=TU@sharebot.net&pass=TUCONTRASEÑA' 
-    });
+    return res.status(200).json({ msg: 'Usa ?correo=TU@sharebot.net&pass=TUPASS' });
   }
 
-  const resultados = {};
+  const out = {};
 
-  // TEST 1: Ver dominios disponibles en mail.tm
+  // Test 1: ¿Vercel llega a mail.tm?
   try {
     const r = await fetch('https://api.mail.tm/domains');
-    const txt = await r.text();
-    resultados.dominios = { status: r.status, body: txt.substring(0, 500) };
+    out.dominios_status = r.status;
+    out.dominios_body = (await r.text()).substring(0, 200);
   } catch (e) {
-    resultados.dominios = { error: e.message };
+    out.dominios_error = e.message;
   }
 
-  // TEST 2: Intentar login
+  // Test 2: Login
   try {
     const r = await fetch('https://api.mail.tm/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ address: correo, password: pass })
     });
-    const txt = await r.text();
-    resultados.login = { 
-      status: r.status, 
-      ok: r.ok,
-      body: txt.substring(0, 500) 
-    };
+    out.login_status = r.status;
+    out.login_body = (await r.text()).substring(0, 400);
   } catch (e) {
-    resultados.login = { error: e.message };
+    out.login_error = e.message;
   }
 
-  return res.status(200).json(resultados);
-}
+  return res.status(200).json(out);
+};
