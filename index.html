@@ -25,14 +25,14 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
- 
+
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .neb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
 .nb1{width:900px;height:700px;top:-300px;left:-200px;background:radial-gradient(ellipse,rgba(120,10,10,.22),transparent 70%);animation:nf 22s ease-in-out infinite;}
 .nb2{width:800px;height:600px;bottom:-200px;right:-150px;background:radial-gradient(ellipse,rgba(100,8,8,.18),transparent 70%);animation:nf 28s ease-in-out infinite reverse;}
 .nb3{width:500px;height:400px;top:20%;left:50%;background:radial-gradient(ellipse,rgba(80,5,5,.12),transparent 70%);animation:nf 18s ease-in-out infinite 9s;}
 @keyframes nf{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-40px)scale(1.08)}66%{transform:translate(-20px,22px)scale(.93)}}
- 
+
 /* BANNER */
 .banner-wrap{position:relative;width:100%;line-height:0;z-index:1;}
 .banner-img{width:100%;max-height:320px;object-fit:cover;object-position:center 15%;display:block;-webkit-mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0.3) 80%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0.3) 80%,transparent 100%);}
@@ -42,16 +42,16 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 #embers{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2;}
 .ember{position:absolute;border-radius:50%;background:radial-gradient(circle,#ff8c00,#cc1818,transparent);animation:embRise linear infinite;}
 @keyframes embRise{0%{opacity:0;transform:translateY(0)scale(0)}10%{opacity:.9;transform:translateY(-10px)scale(1)}90%{opacity:.2;transform:translateY(-150px)scale(.3)}100%{opacity:0;transform:translateY(-170px)scale(0)}}
- 
+
 /* LAYOUT */
 .wrapper{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:0 20px 60px;}
- 
+
 /* PILLS */
 .pills{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:20px 0 16px;animation:su .8s cubic-bezier(.22,1,.36,1) both;}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:rgba(20,5,5,.8);border:1px solid var(--bdr2);border-radius:30px;font-size:11px;font-weight:600;color:var(--t2);backdrop-filter:blur(12px);}
 .pill-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.2s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
- 
+
 /* STEPS */
 .steps-wrap{display:flex;align-items:center;gap:6px;margin-bottom:20px;animation:su .9s .1s cubic-bezier(.22,1,.36,1) both;}
 .step-item{display:flex;align-items:center;gap:8px;}
@@ -61,7 +61,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .step-label{font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:1px;transition:color .3s;}
 .step-label.active{color:var(--red3);}
 .step-connector{width:44px;height:1px;background:var(--bdr);}
- 
+
 /* CARD */
 .card-wrap{width:100%;max-width:520px;position:relative;animation:su 1s .2s cubic-bezier(.22,1,.36,1) both;}
 #border-cvs{position:absolute;top:-2px;left:-2px;width:calc(100% + 4px);height:calc(100% + 4px);border-radius:26px;pointer-events:none;z-index:0;}
@@ -72,14 +72,14 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .cc.tr{top:0;right:0;width:120px;height:120px;background:radial-gradient(circle at 100% 0,rgba(204,24,24,.05),transparent 70%);}
 .cig{position:absolute;inset:0;border-radius:24px;pointer-events:none;background:radial-gradient(ellipse 70% 25% at 50% 0%,rgba(204,24,24,.06),transparent);transition:background .5s;}
 body.svc-disney .cig{background:radial-gradient(ellipse 70% 25% at 50% 0%,rgba(26,111,255,.07),transparent);}
- 
+
 /* SECTION HEADER */
 .section-title{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
 .section-icon{width:42px;height:42px;border-radius:12px;background:rgba(204,24,24,.1);border:1px solid rgba(204,24,24,.3);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 12px rgba(204,24,24,.15);transition:all .4s;}
 body.svc-disney .section-icon{background:rgba(26,111,255,.1);border-color:rgba(26,111,255,.3);box-shadow:0 0 12px rgba(26,111,255,.15);}
 .section-text h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
 .section-text p{font-size:12px;color:var(--mut);font-weight:500;margin-top:2px;}
- 
+
 /* SERVICIOS */
 .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .service-card{position:relative;padding:22px 14px 20px;border-radius:18px;border:1.5px solid var(--bdr);background:linear-gradient(160deg,rgba(22,10,28,.9),rgba(12,5,16,.95));cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:11px;text-align:center;overflow:hidden;user-select:none;transition:all .3s cubic-bezier(.34,1.56,.64,1);}
@@ -105,7 +105,7 @@ body.svc-disney .section-icon{background:rgba(26,111,255,.1);border-color:rgba(2
 .netflix-card.selected .service-badge{background:#cc1818;transform:scale(1) rotate(0);box-shadow:0 0 14px #cc1818;}
 .disney-card.selected  .service-badge{background:var(--blue);transform:scale(1) rotate(0);box-shadow:0 0 14px var(--blue);}
 .tag-popular{position:absolute;top:0;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#8b0000,#cc1818);color:#ffcccc;font-size:8px;font-weight:800;padding:3px 10px;border-radius:0 0 9px 9px;letter-spacing:1.5px;text-transform:uppercase;box-shadow:0 2px 8px rgba(204,24,24,.4);}
- 
+
 /* NETFLIX SUBTIPO */
 .netflix-subtype{margin-top:16px;max-height:0;overflow:hidden;opacity:0;transform:translateY(8px);transition:max-height .45s ease,opacity .4s ease,transform .4s ease;}
 .netflix-subtype.show{max-height:260px;opacity:1;transform:translateY(0);}
@@ -113,20 +113,22 @@ body.svc-disney .section-icon{background:rgba(26,111,255,.1);border-color:rgba(2
 .subtype-label::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(204,24,24,.4));}
 .subtype-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(204,24,24,.4),transparent);}
 .subtype-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.subtype-grid-3{grid-template-columns:1fr 1fr 1fr;}
+@media(max-width:400px){.subtype-grid-3{grid-template-columns:1fr 1fr;}}
 .subtype-btn{padding:16px 10px;border-radius:16px;border:1.5px solid rgba(204,24,24,.2);background:rgba(204,24,24,.04);cursor:pointer;text-align:center;user-select:none;transition:all .3s cubic-bezier(.34,1.56,.64,1);}
 .subtype-btn:hover{border-color:#cc1818;background:rgba(204,24,24,.09);transform:translateY(-3px);box-shadow:0 9px 28px rgba(204,24,24,.3);}
 .subtype-btn.selected{border-color:#cc1818;background:rgba(204,24,24,.1);transform:translateY(-3px);box-shadow:0 9px 28px rgba(204,24,24,.3);}
 .subtype-icon{font-size:26px;margin-bottom:7px;display:block;}
 .subtype-name{font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;color:var(--text);}
 .subtype-desc{font-size:10px;color:var(--mut);font-weight:500;margin-top:3px;}
- 
+
 /* DIVIDER */
 .fancy-divider{display:flex;align-items:center;gap:12px;margin:22px 0 18px;opacity:0;transform:translateY(6px);transition:all .5s ease;}
 .fancy-divider.show{opacity:1;transform:translateY(0);}
 .divider-line{flex:1;height:1px;background:var(--bdr);}
 .divider-chip{padding:5px 14px;background:rgba(204,24,24,.07);border:1px solid rgba(204,24,24,.22);border-radius:30px;font-size:10px;font-weight:700;color:var(--red3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
 body.svc-disney .divider-chip{background:rgba(26,111,255,.07);border-color:rgba(26,111,255,.22);color:var(--blue2);}
- 
+
 /* FORM FIELDS */
 .form-field{margin-bottom:16px;opacity:0;transform:translateY(12px);transition:all .5s ease;}
 .form-field.show{opacity:1;transform:translateY(0);}
@@ -139,7 +141,7 @@ input[type=text]:focus{border-color:#cc1818;background:rgba(204,24,24,.04);box-s
 input::placeholder{color:var(--mut);}
 body.svc-disney input[type=text]:focus{border-color:var(--blue);background:rgba(26,111,255,.04);box-shadow:0 0 0 4px rgba(26,111,255,.12);}
 .field-hint{margin-top:6px;font-size:10px;color:var(--mut);font-weight:500;}
- 
+
 /* BUTTON */
 .btn-submit{width:100%;padding:18px;border:none;border-radius:14px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;cursor:pointer;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:9px;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s,box-shadow .3s;color:#fff;letter-spacing:.4px;background:linear-gradient(135deg,#8b0000 0%,#cc1818 50%,#ff3030 100%);box-shadow:0 8px 34px rgba(204,24,24,.45),0 0 0 1px rgba(255,80,80,.1) inset;}
 .btn-submit.show{opacity:1;transform:translateY(0);}
@@ -156,11 +158,11 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
 .btn-loader{display:none;width:22px;height:22px;border:2.5px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
 .btn-submit.loading .btn-content{display:none;}
 .btn-submit.loading .btn-loader{display:block;}
- 
+
 /* ERROR */
 .error-box{display:none;margin-top:12px;padding:14px 16px;background:rgba(204,24,24,.08);border:1px solid rgba(204,24,24,.28);border-radius:12px;font-size:13px;font-weight:600;color:#ff6060;text-align:center;animation:sx .4s ease;line-height:1.55;}
 @keyframes sx{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
- 
+
 /* RESULTADO */
 .result-wrap{display:none;flex-direction:column;align-items:center;text-align:center;padding:10px 0;animation:su .7s cubic-bezier(.22,1,.36,1) both;}
 .result-icon{font-size:56px;margin-bottom:14px;animation:iconPop .5s cubic-bezier(.34,1.56,.64,1) both;}
@@ -183,17 +185,17 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
 .expira-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:rgba(245,194,24,.07);border:1px solid rgba(245,194,24,.22);border-radius:30px;margin-bottom:20px;font-size:12px;font-weight:600;color:#f5c218;}
 .btn-reset{padding:12px 30px;background:rgba(204,24,24,.08);border:1px solid var(--bdr2);border-radius:30px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--t2);cursor:pointer;transition:all .3s;}
 .btn-reset:hover{background:rgba(204,24,24,.15);color:var(--text);transform:translateY(-1px);}
- 
+
 /* FOOTER */
 .card-foot{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:28px;padding-top:22px;border-top:1px solid var(--bdr);flex-wrap:wrap;}
 .flink{display:flex;align-items:center;gap:6px;padding:9px 20px;background:rgba(204,24,24,.06);border:1px solid var(--bdr2);border-radius:30px;font-size:12px;font-weight:600;color:var(--t2);text-decoration:none;transition:all .3s;backdrop-filter:blur(10px);}
 .flink:hover{background:rgba(204,24,24,.14);border-color:rgba(204,24,24,.5);color:var(--text);transform:translateY(-2px);}
 .copy{margin-top:16px;font-size:11px;color:var(--mut);text-align:center;}
 .copy b{color:rgba(204,24,24,.7);font-weight:700;}
- 
+
 @keyframes su{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
- 
+
 @media(max-width:560px){
   .card{padding:24px 18px;}
   .services-grid,.subtype-grid{gap:10px;}
@@ -204,12 +206,12 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
 </style>
 </head>
 <body>
- 
+
 <canvas id="bg-canvas"></canvas>
 <div class="neb nb1"></div>
 <div class="neb nb2"></div>
 <div class="neb nb3"></div>
- 
+
 <!-- BANNER -->
 <div class="banner-wrap">
   <img class="banner-img" src="https://i.imgur.com/WzlTGIP.jpeg" alt="Itachi" onerror="this.style.minHeight='180px'">
@@ -219,15 +221,15 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
   </div>
   <div id="embers"></div>
 </div>
- 
+
 <div class="wrapper">
- 
+
   <div class="pills">
     <div class="pill"><span class="pill-dot"></span> En línea ahora</div>
     <div class="pill">⚡ Entrega rápida</div>
     <div class="pill">🔒 100% seguro</div>
   </div>
- 
+
   <!-- STEPS -->
   <div class="steps-wrap">
     <div class="step-item">
@@ -245,14 +247,14 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
       <div class="step-label" id="sl3">¡Listo!</div>
     </div>
   </div>
- 
+
   <div class="card-wrap">
     <canvas id="border-cvs"></canvas>
     <div class="card">
       <div class="cig"></div>
       <div class="cc tl"></div>
       <div class="cc tr"></div>
- 
+
       <!-- FORMULARIO -->
       <div id="formState">
         <div class="section-title">
@@ -262,7 +264,7 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
             <p>Selecciona tu plataforma de streaming</p>
           </div>
         </div>
- 
+
         <div class="services-grid">
           <div class="service-card netflix-card" id="cardNetflix" onclick="selectService('netflix')">
             <div class="tag-popular">⭐ Popular</div>
@@ -289,11 +291,11 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
             <div class="service-info"><h4>Disney+</h4><p>Código de acceso</p></div>
           </div>
         </div>
- 
+
         <!-- Netflix subtipo -->
         <div class="netflix-subtype" id="netflixSubtype">
           <div class="subtype-label">🎬 ¿Qué código necesitas?</div>
-          <div class="subtype-grid">
+          <div class="subtype-grid subtype-grid-3">
             <div class="subtype-btn" id="btnHogar" onclick="selectNetflixType('netflix_hogar')">
               <span class="subtype-icon">🏠</span>
               <div class="subtype-name">Código Hogar</div>
@@ -304,16 +306,21 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
               <div class="subtype-name">Inicio de Sesión</div>
               <div class="subtype-desc">Código de 4 dígitos</div>
             </div>
+            <div class="subtype-btn" id="btnPass" onclick="selectNetflixType('netflix_pass')">
+              <span class="subtype-icon">🔐</span>
+              <div class="subtype-name">Cambiar Contraseña</div>
+              <div class="subtype-desc">Código de 6 dígitos</div>
+            </div>
           </div>
         </div>
- 
+
         <!-- Divider -->
         <div class="fancy-divider" id="divider">
           <div class="divider-line"></div>
           <div class="divider-chip">✉ Ingresa tu correo de cuenta</div>
           <div class="divider-line"></div>
         </div>
- 
+
         <!-- Campo correo — el único campo -->
         <div class="form-field" id="fieldEmail">
           <div class="field-label">📧 Tu correo de cuenta</div>
@@ -327,62 +334,68 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
           </div>
           <div class="field-hint">💡 Escribe el correo que te proporcionamos</div>
         </div>
- 
+
         <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">
           <div class="btn-content"><span>Ver mi código</span><span class="btn-arrow">→</span></div>
           <div class="btn-loader"></div>
         </button>
- 
+
         <div class="error-box" id="errorBox"></div>
- 
+
         <div class="card-foot">
           <a class="flink" id="waLink" href="#" target="_blank">💬 WhatsApp</a>
           <a class="flink" id="mailLink" href="#">🛡️ Soporte</a>
         </div>
         <div class="copy">© 2025 <b>ItachiZone</b> — Todos los derechos reservados</div>
       </div>
- 
+
       <!-- RESULTADO -->
       <div class="result-wrap" id="resultState">
         <div class="result-icon" id="resultIcon">🔥</div>
         <div class="result-title" id="resultTitle">¡Aquí está!</div>
         <div class="result-sub" id="resultSub"></div>
- 
+
         <div class="link-box" id="boxNetflixHogar" style="display:none">
           <div class="box-label">🏠 Tu link de actualización de Hogar</div>
           <div class="link-text" id="netflixLink"></div>
           <a class="btn-abrir" id="netflixBtn" href="#" target="_blank">🎬 Abrir y actualizar hogar</a>
         </div>
- 
+
         <div class="codigo4-box" id="boxNetflixLogin" style="display:none">
           <div class="box-label">🔑 Código de inicio de sesión Netflix</div>
           <div class="codigo-num codigo4-num" id="netflixCode4"></div>
           <div class="codigo-expira">⏱️ Este código expira pronto</div>
         </div>
- 
+
         <div class="codigo6-box" id="boxDisney" style="display:none">
           <div class="box-label">🏰 Código de acceso Disney+</div>
           <div class="codigo-num codigo6-num" id="disneyCode6"></div>
           <div class="codigo-expira">⏱️ Este código expira en 15 minutos</div>
         </div>
- 
+
+        <div class="codigo4-box" id="boxNetflixPass" style="display:none">
+          <div class="box-label">🔐 Código para cambio de contraseña Netflix</div>
+          <div class="codigo-num codigo4-num" id="netflixCodePass" style="font-size:44px;letter-spacing:8px;"></div>
+          <div class="codigo-expira">⏱️ Este código expira pronto</div>
+        </div>
+
         <div class="expira-badge" style="margin-top:16px">⚠️ Úsalo antes de que expire</div>
         <button class="btn-reset" onclick="resetForm()">← Consultar de nuevo</button>
       </div>
- 
+
     </div>
   </div>
 </div>
- 
+
 <script>
 /* ════════════════════════════
    CONFIGURACIÓN
 ════════════════════════════ */
-const API_URL = 'https://itachi-api.jeffryperezhuallasco.workers.dev'; // Vercel lo resuelve automáticamente
- 
+const API_URL = 'https://itachi-api.jeffryperezhuallasco.workers.dev';
+
 document.getElementById('waLink').href   = 'https://wa.me/51986165524';
 document.getElementById('mailLink').href = 'mailto:jeffryperezhuallasco@gmail.com';
- 
+
 /* ════════════════════════════
    BG CANVAS
 ════════════════════════════ */
@@ -408,7 +421,7 @@ document.getElementById('mailLink').href = 'mailto:jeffryperezhuallasco@gmail.co
   }
   window.addEventListener('resize',rsz);init();draw();
 })();
- 
+
 (function(){
   const c=document.getElementById('embers');
   function spawn(){
@@ -419,7 +432,7 @@ document.getElementById('mailLink').href = 'mailto:jeffryperezhuallasco@gmail.co
   }
   setInterval(spawn,350);
 })();
- 
+
 (function(){
   const bc=document.getElementById('border-cvs'),bx=bc.getContext('2d');
   let ang=0;
@@ -447,13 +460,13 @@ document.getElementById('mailLink').href = 'mailto:jeffryperezhuallasco@gmail.co
   window.addEventListener('resize',()=>setTimeout(rsz,100));
   setTimeout(()=>{rsz();draw();},200);
 })();
- 
+
 /* ════════════════════════════
    LÓGICA APP
 ════════════════════════════ */
 const $=id=>document.getElementById(id);
 let currentService=null;
- 
+
 function setStep(n){
   for(let i=1;i<=3;i++){
     const num=$('sn'+i),lbl=$('sl'+i);
@@ -462,7 +475,7 @@ function setStep(n){
     else{num.className='step-num';num.textContent=i;lbl.className='step-label';}
   }
 }
- 
+
 function selectService(svc){
   document.body.className='svc-'+svc;
   $('cardNetflix').className='service-card netflix-card'+(svc==='netflix'?' selected':'');
@@ -481,15 +494,16 @@ function selectService(svc){
   }
   setStep(2);
 }
- 
+
 function selectNetflixType(tipo){
   currentService=tipo;
   $('btnHogar').className='subtype-btn'+(tipo==='netflix_hogar'?' selected':'');
   $('btnLogin').className='subtype-btn'+(tipo==='netflix_login'?' selected':'');
+  $('btnPass').className='subtype-btn'+(tipo==='netflix_pass'?' selected':'');
   hideError();
   showFormFields();
 }
- 
+
 function showFormFields(){
   setTimeout(()=>{
     $('divider').classList.add('show');
@@ -498,24 +512,24 @@ function showFormFields(){
   },80);
   setTimeout(()=>$('emailInput').focus(),350);
 }
- 
+
 async function handleSubmit(){
   const correo=$('emailInput').value.trim().toLowerCase();
- 
+
   if(!currentService){showError('👆 Elige el tipo de código primero.');return;}
   if(!correo){showError('📧 Ingresa tu correo de cuenta.');$('emailInput').focus();return;}
   if(!correo.includes('@')){showError('📧 Ingresa un correo válido.');$('emailInput').focus();return;}
- 
+
   hideError();
   const btn=$('btnSubmit');
   btn.classList.add('loading');
   btn.disabled=true;
- 
+
   try{
     const url=`${API_URL}?servicio=${encodeURIComponent(currentService)}&correo=${encodeURIComponent(correo)}`;
     const res=await fetch(url);
     const data=await res.json();
- 
+
     if(res.ok && data.success && data.valor){
       showResult(data);
     } else {
@@ -528,14 +542,14 @@ async function handleSubmit(){
     btn.disabled=false;
   }
 }
- 
+
 function showResult(data){
   $('formState').style.display='none';
   $('resultState').style.display='flex';
   ['sn2','sn3'].forEach(id=>{const e=$(id);e.className='step-num done';e.textContent='✓';});
   $('sl3').className='step-label active';
-  ['boxNetflixHogar','boxNetflixLogin','boxDisney'].forEach(id=>$(id).style.display='none');
- 
+  ['boxNetflixHogar','boxNetflixLogin','boxDisney','boxNetflixPass'].forEach(id=>$(id).style.display='none');
+
   if(currentService==='netflix_hogar'){
     $('resultIcon').textContent='🏠';
     $('resultTitle').textContent='¡Tu link está listo!';
@@ -546,9 +560,15 @@ function showResult(data){
   } else if(currentService==='netflix_login'){
     $('resultIcon').textContent='🔑';
     $('resultTitle').textContent='¡Tu código está listo!';
-    $('resultSub').textContent='Ingresa este código de 4 dígitos en Netflix para iniciar sesión.';
+    $('resultSub').textContent='Ingresa este código en Netflix para iniciar sesión.';
     $('boxNetflixLogin').style.display='block';
     $('netflixCode4').textContent=data.valor;
+  } else if(currentService==='netflix_pass'){
+    $('resultIcon').textContent='🔐';
+    $('resultTitle').textContent='¡Tu código está listo!';
+    $('resultSub').textContent='Ingresa este código de 6 dígitos en Netflix para cambiar tu contraseña.';
+    $('boxNetflixPass').style.display='block';
+    $('netflixCodePass').textContent=data.valor;
   } else if(currentService==='disney'){
     $('resultIcon').textContent='🏰';
     $('resultTitle').textContent='¡Tu código está listo!';
@@ -557,7 +577,7 @@ function showResult(data){
     $('disneyCode6').textContent=data.valor;
   }
 }
- 
+
 function showError(msg){
   const b=$('errorBox');
   b.innerHTML=msg.replace(/\n/g,'<br>');
@@ -565,7 +585,7 @@ function showError(msg){
   setTimeout(()=>b.style.display='none',8000);
 }
 function hideError(){ $('errorBox').style.display='none'; }
- 
+
 function resetForm(){
   currentService=null;
   document.body.className='';
@@ -576,15 +596,15 @@ function resetForm(){
   $('cardDisney').className ='service-card disney-card';
   $('btnHogar').className='subtype-btn';
   $('btnLogin').className='subtype-btn';
+  $('btnPass').className='subtype-btn';
   $('netflixSubtype').classList.remove('show');
   ['divider','fieldEmail','btnSubmit'].forEach(id=>$(id).classList.remove('show'));
   hideError();
   setStep(1);
 }
- 
+
 $('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleSubmit();});
 $('emailInput').addEventListener('input',()=>hideError());
 </script>
 </body>
 </html>
- 
