@@ -373,10 +373,10 @@ body.svc-disney .btn-submit:hover{box-shadow:0 14px 44px rgba(26,111,255,.58);}
           <div class="codigo-expira">⏱️ Este código expira en 15 minutos</div>
         </div>
 
-        <div class="codigo4-box" id="boxNetflixPass" style="display:none">
-          <div class="box-label">🔐 Código para cambio de contraseña Netflix</div>
-          <div class="codigo-num codigo4-num" id="netflixCodePass" style="font-size:44px;letter-spacing:8px;"></div>
-          <div class="codigo-expira">⏱️ Este código expira pronto</div>
+        <div class="link-box" id="boxNetflixPass" style="display:none">
+          <div class="box-label">🔐 Tu link para restablecer contraseña</div>
+          <div class="link-text" id="netflixPassLink"></div>
+          <a class="btn-abrir" id="netflixPassBtn" href="#" target="_blank">🔐 Abrir y restablecer contraseña</a>
         </div>
 
         <div class="expira-badge" style="margin-top:16px">⚠️ Úsalo antes de que expire</div>
@@ -565,10 +565,11 @@ function showResult(data){
     $('netflixCode4').textContent=data.valor;
   } else if(currentService==='netflix_pass'){
     $('resultIcon').textContent='🔐';
-    $('resultTitle').textContent='¡Tu código está listo!';
-    $('resultSub').textContent='Ingresa este código de 6 dígitos en Netflix para cambiar tu contraseña.';
+    $('resultTitle').textContent='¡Tu link está listo!';
+    $('resultSub').textContent='Abre el link para restablecer la contraseña de Netflix. Expira pronto.';
     $('boxNetflixPass').style.display='block';
-    $('netflixCodePass').textContent=data.valor;
+    $('netflixPassLink').textContent=data.valor;
+    $('netflixPassBtn').href=data.valor;
   } else if(currentService==='disney'){
     $('resultIcon').textContent='🏰';
     $('resultTitle').textContent='¡Tu código está listo!';
